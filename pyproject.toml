@@ -11,7 +11,10 @@ dependencies = [
 ]
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = [
+    "setuptools>=61.0",
+    "pkginfo>=1.10"
+]
 build-backend = "setuptools.build_meta"
 
 [project.urls]
