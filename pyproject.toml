@@ -1,0 +1,34 @@
+[project]
+name = "i3-tools"
+version = "0.0.1.dev0"
+description = "collection of py tools for manipulating i3wm"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords=['i3', 'i3wm']
+dependencies = [
+    "i3ipc>=2.0.1",
+]
+
+[build-system]
+requires = [
+    "setuptools>=80.9"
+]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+homepage = "https://github.com/laur89/i3-tools"
+
+[project.scripts]
+i3-cycle-focus-daemon = "i3_tools.i3_cycle_focus_daemon:main"
+i3-cycle-focus = "i3_tools.i3_cycle_focus:main"
+i3-cycle-workspace-daemon = "i3_tools.i3_cycle_workspace_daemon:main"
+i3-cycle-workspace = "i3_tools.i3_cycle_workspace:main"
+
+[tool.zest-releaser]
+extra-message = "[CI SKIP]"
+# do not push to git remote:
+push-changes = false
+# do not release to pypi:
+release = false
+history_format = "md"
