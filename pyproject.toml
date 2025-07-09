@@ -20,9 +20,7 @@ build-backend = "setuptools.build_meta"
 homepage = "https://github.com/laur89/i3-tools"
 
 [project.scripts]
-i3-cycle-focus-daemon = "i3_tools.i3_cycle_focus_daemon:main"
 i3-cycle-focus = "i3_tools.i3_cycle_focus:main"
-i3-cycle-workspace-daemon = "i3_tools.i3_cycle_workspace_daemon:main"
 i3-cycle-workspace = "i3_tools.i3_cycle_workspace:main"
 
 [tool.zest-releaser]
