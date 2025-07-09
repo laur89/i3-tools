@@ -57,6 +57,8 @@ steps:
 
 - name: pypi-publish
   image: plugins/pypi
+  commands:
+  - python -m pip install --upgrade twine --ignore-installed
   settings:
     username:
       from_secret: public_pypi_username
