@@ -16,7 +16,6 @@ import os
 import json
 import logging
 
-SOCKET_FILE = '/tmp/.i3-cycle-focus.sock'
 STATE_FILE = '/tmp/.i3-cycle-focus.state'
 STATE_VER = 1  # bump this whenever persisted state data structure changes
 WIN_HISTORY = 16
@@ -172,16 +171,6 @@ class FocusWatcher:
                 await self.i3.command('[id={}] focus'.format(window_id))
                 break
 
-    async def run(self):
-        async def handle_switch(reader, writer):
-            data = await reader.read(1024)
-            logging.info('received data: {}'.format(data))
-            if data == SWITCH_MSG:
-                await self.switch_win()
-
-        server = await asyncio.start_unix_server(handle_switch, SOCKET_FILE)
-        await server.serve_forever()
-
 
 async def run_server():
     focus_watcher = FocusWatcher()
@@ -190,7 +179,6 @@ async def run_server():
 
     async with asyncio.TaskGroup() as tg:
         asyncio.get_running_loop().add_signal_handler(signal.SIGUSR1, lambda: tg.create_task(focus_watcher.switch_win()))
-        tg.create_task(focus_watcher.run())
 
 
 def main():
