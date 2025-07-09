@@ -137,13 +137,11 @@ class FocusWatcher:
                 break
 
 
-async def run_server():
+async def run_server(loop):
     focus_watcher = FocusWatcher()
     focus_watcher.hydrate_state()
     await focus_watcher.connect()
-
-    async with asyncio.TaskGroup() as tg:
-        asyncio.get_running_loop().add_signal_handler(signal.SIGUSR1, lambda: tg.create_task(focus_watcher.switch_ws()))
+    loop.add_signal_handler(signal.SIGUSR1, lambda: loop.create_task(focus_watcher.switch_ws()))
 
 
 def main():
@@ -199,4 +197,6 @@ def main():
     if (args.delay and args.delay > 0) or args.delay == 0.0:
         UPDATE_DELAY = args.delay
 
-    asyncio.run(run_server())
+    loop = asyncio.get_event_loop()
+    loop.create_task(run_server(loop))
+    loop.run_forever()

@@ -172,13 +172,11 @@ class FocusWatcher:
                 break
 
 
-async def run_server():
+async def run_server(loop):
     focus_watcher = FocusWatcher()
     focus_watcher.hydrate_state()
     await focus_watcher.connect()
-
-    async with asyncio.TaskGroup() as tg:
-        asyncio.get_running_loop().add_signal_handler(signal.SIGUSR1, lambda: tg.create_task(focus_watcher.switch_win()))
+    loop.add_signal_handler(signal.SIGUSR1, lambda: loop.create_task(focus_watcher.switch_win()))
 
 
 def main():
@@ -260,4 +258,6 @@ def main():
     per_ws = args.focused_workspace
     KEYED_CONF = PER_OUTPUT or per_ws
 
-    asyncio.run(run_server())
+    loop = asyncio.get_event_loop()
+    loop.create_task(run_server(loop))
+    loop.run_forever()
