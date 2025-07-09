@@ -1,6 +1,6 @@
 [project]
 name = "i3-tools"
-version = "0.0.1.dev0"
+version = "0.0.1"
 description = "collection of py tools for manipulating i3wm"
 readme = "README.md"
 requires-python = ">=3.8"
